@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "mDvtBIBamdkcE5VwVmaLXW8dYqL+Z8B3MWBFYCgnmJ8=",
+  "Source": "PerfumeApiBackend",
+  "BasePath": "_content/PerfumeApiBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
