@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PerfumeApiBackend.Models.DataModels
 {
-    public class BaseEntity
+    public abstract class BaseEntity 
     {
         [Required]
         [Key]

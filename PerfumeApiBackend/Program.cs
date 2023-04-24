@@ -1,5 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 using PerfumeApiBackend.DataAccess;
+using PerfumeApiBackend.Models.DataModels;
+using PerfumeApiBackend.Repository;
+using PerfumeApiBackend.Repository.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 const string CONNECTIONNAME = "PerfumeDB";
 var connectionString = builder.Configuration.GetConnectionString(CONNECTIONNAME);
 builder.Services.AddDbContext<PerfumeContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddScoped<PerfumeRepository>();
+builder.Services.AddScoped<PerfumeryRepository>();
 
 
 builder.Services.AddControllers();

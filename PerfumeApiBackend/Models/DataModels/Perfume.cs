@@ -7,6 +7,16 @@ namespace PerfumeApiBackend.Models.DataModels
 
     public class Perfume : BaseEntity
     {
+        /*
+        public int ID { get; set; }
+        public string? CreatedBy { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string? UpdateBy { get; set; }
+        public DateTime? UpdateAt { get; set; }
+        public string? DeleteBy { get; set; }
+        public DateTime? DeleteAt { get; set; }
+        */
+
         [Required, StringLength(50)]
         public string? Name{ get; set; } = string.Empty;
         [Required, StringLength(200)]
@@ -27,6 +37,6 @@ namespace PerfumeApiBackend.Models.DataModels
         [ForeignKey("PerfumeryID")]
         [InverseProperty("Perfumes")]
         public virtual Perfumery Perfumery { get; set; }
-        
+
     }
 }
