@@ -23,6 +23,17 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+#region Migrations
+/*
+using(var scope = app.Services.CreateScope())
+{
+    PerfumeContext context = scope.ServiceProvider.GetRequiredService<PerfumeContext>();
+    context.Database.Migrate();
+}
+*/
+#endregion
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

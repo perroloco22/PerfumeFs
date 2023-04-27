@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PerfumeApiBackend.DataAccess;
 
@@ -11,9 +12,10 @@ using PerfumeApiBackend.DataAccess;
 namespace PerfumeApiBackend.Migrations
 {
     [DbContext(typeof(PerfumeContext))]
-    partial class PerfumeContextModelSnapshot : ModelSnapshot
+    [Migration("20230427141944_MigrationsInitial")]
+    partial class MigrationsInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

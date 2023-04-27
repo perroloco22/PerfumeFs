@@ -7,36 +7,46 @@ namespace PerfumeApiBackend.Models.DataModels
 
     public class Perfume : BaseEntity
     {
-        /*
-        public int ID { get; set; }
-        public string? CreatedBy { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public string? UpdateBy { get; set; }
-        public DateTime? UpdateAt { get; set; }
-        public string? DeleteBy { get; set; }
-        public DateTime? DeleteAt { get; set; }
-        */
-
+        
         [Required, StringLength(50)]
         public string? Name{ get; set; } = string.Empty;
+
         [Required, StringLength(200)]
         public string? Description { get; set; } = string.Empty;
-        [Required, StringLength(50)]
-        public string? Notes { get; set; } = string.Empty;
-        [Required, StringLength(50)]
-        public string Brand { get; set; } = string.Empty;
-        [Required]
-        public int? Volume { get; set; }
-        [Required]
-        public int? Gender { get; set; }
-        [Required]
-        public int? Price { get; set; }
 
-        public int? PerfumeryID { get; set; }
+        [Required]
+        public int? Cost { get; set; }
+        
+        [Required, StringLength(50)]
+        public string IdBrand { get; set; } = string.Empty;
 
-        [ForeignKey("PerfumeryID")]
-        [InverseProperty("Perfumes")]
-        public virtual Perfumery Perfumery { get; set; }
+        [Required]
+        public int? IdVolume { get; set; }
+
+        [Required]
+        public int? IdGender { get; set; }
+
+        [Required]
+        public int? IdConcentration { get; set; }
+                
+        [Required]
+        public Brand Brand { get; set; } = new Brand();
+
+        [Required]
+        public Volume Volume { get; set; } = new Volume();
+
+        [Required]
+        public Gender Gender { get; set; } = new Gender();
+
+        [Required]
+        public Concentration Concentration { get; set; } = new Concentration();
+
+        [Required]
+        public Stock Stock { get; set; } = new Stock();
+
+        //[ForeignKey("IdPerfumery")]
+        //[InverseProperty("Perfumes")]
+        //public virtual Perfumery Perfumery { get; set; }
 
     }
 }
