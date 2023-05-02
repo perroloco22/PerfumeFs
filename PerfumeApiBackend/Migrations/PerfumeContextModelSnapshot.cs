@@ -30,7 +30,7 @@ namespace PerfumeApiBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -64,7 +64,7 @@ namespace PerfumeApiBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -99,7 +99,7 @@ namespace PerfumeApiBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -134,17 +134,20 @@ namespace PerfumeApiBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int>("BrandID")
+                    b.Property<int?>("BrandID")
+                        .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("int");
 
-                    b.Property<int>("ConcentrationID")
+                    b.Property<int?>("ConcentrationID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("Cost")
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -161,23 +164,7 @@ namespace PerfumeApiBackend.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("GenderID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("IdBrand")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("IdConcentration")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdGender")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdVolume")
+                    b.Property<int?>("GenderID")
                         .IsRequired()
                         .HasColumnType("int");
 
@@ -195,7 +182,8 @@ namespace PerfumeApiBackend.Migrations
                     b.Property<string>("UpdateBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VolumeID")
+                    b.Property<int?>("VolumeID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -226,7 +214,7 @@ namespace PerfumeApiBackend.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -270,7 +258,7 @@ namespace PerfumeApiBackend.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -282,10 +270,10 @@ namespace PerfumeApiBackend.Migrations
                     b.Property<string>("DeleteBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdPerfume")
+                    b.Property<int>("PerfumeID")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdPerfumery")
+                    b.Property<int>("PerfumeryID")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateAt")
@@ -299,6 +287,96 @@ namespace PerfumeApiBackend.Migrations
                     b.ToTable("Stock", (string)null);
                 });
 
+            modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.User", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeleteAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleteBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserCategoryID")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserCategoryID");
+
+                    b.ToTable("User", (string)null);
+                });
+
+            modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.UserCategory", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeleteAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleteBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("UserCategory", (string)null);
+                });
+
             modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.Volume", b =>
                 {
                     b.Property<int>("ID")
@@ -307,7 +385,7 @@ namespace PerfumeApiBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
@@ -387,6 +465,17 @@ namespace PerfumeApiBackend.Migrations
                     b.Navigation("Stock");
                 });
 
+            modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.User", b =>
+                {
+                    b.HasOne("PerfumeApiBackend.Models.DataModels.UserCategory", "UserCategory")
+                        .WithMany("Users")
+                        .HasForeignKey("UserCategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserCategory");
+                });
+
             modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.Brand", b =>
                 {
                     b.Navigation("Perfumes");
@@ -407,6 +496,11 @@ namespace PerfumeApiBackend.Migrations
                     b.Navigation("Perfumerys");
 
                     b.Navigation("Perfumes");
+                });
+
+            modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.UserCategory", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.Volume", b =>

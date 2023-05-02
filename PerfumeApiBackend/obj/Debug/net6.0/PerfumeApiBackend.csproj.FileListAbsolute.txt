@@ -269,3 +269,5 @@ E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\obj\Debug\net6.0\ref
 E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\obj\Debug\net6.0\PerfumeApiBackend.pdb
 E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\obj\Debug\net6.0\PerfumeApiBackend.genruntimeconfig.cache
 E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\obj\Debug\net6.0\ref\PerfumeApiBackend.dll
+E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll

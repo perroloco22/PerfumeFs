@@ -53,8 +53,8 @@ GO
 CREATE TABLE [Stock] (
     [ID] int NOT NULL IDENTITY,
     [Amount] int NOT NULL,
-    [IdPerfume] int NOT NULL,
-    [IdPerfumery] int NOT NULL,
+    [PerfumeID] int NOT NULL,
+    [PerfumeryID] int NOT NULL,
     [CreatedBy] nvarchar(max) NULL,
     [CreatedAt] datetime2 NOT NULL,
     [UpdateBy] nvarchar(max) NULL,
@@ -65,7 +65,20 @@ CREATE TABLE [Stock] (
 );
 GO
 
-CREATE TABLE [Volume] (
+CREATE TABLE [UserCategories] (
+    [ID] int NOT NULL IDENTITY,
+    [Category] nvarchar(max) NOT NULL,
+    [CreatedBy] nvarchar(max) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdateBy] nvarchar(max) NULL,
+    [UpdateAt] datetime2 NULL,
+    [DeleteBy] nvarchar(max) NULL,
+    [DeleteAt] datetime2 NULL,
+    CONSTRAINT [PK_UserCategories] PRIMARY KEY ([ID])
+);
+GO
+
+CREATE TABLE [UserCategory] (
     [ID] int NOT NULL IDENTITY,
     [Type] nvarchar(max) NULL,
     [CreatedBy] nvarchar(max) NULL,
@@ -74,7 +87,7 @@ CREATE TABLE [Volume] (
     [UpdateAt] datetime2 NULL,
     [DeleteBy] nvarchar(max) NULL,
     [DeleteAt] datetime2 NULL,
-    CONSTRAINT [PK_Volume] PRIMARY KEY ([ID])
+    CONSTRAINT [PK_UserCategory] PRIMARY KEY ([ID])
 );
 GO
 
@@ -94,19 +107,34 @@ CREATE TABLE [Perfumery] (
 );
 GO
 
+CREATE TABLE [User] (
+    [ID] int NOT NULL IDENTITY,
+    [Name] nvarchar(50) NOT NULL,
+    [LastName] nvarchar(50) NOT NULL,
+    [Email] nvarchar(max) NOT NULL,
+    [Password] nvarchar(max) NOT NULL,
+    [CategoryID] int NOT NULL,
+    [CreatedBy] nvarchar(max) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdateBy] nvarchar(max) NULL,
+    [UpdateAt] datetime2 NULL,
+    [DeleteBy] nvarchar(max) NULL,
+    [DeleteAt] datetime2 NULL,
+    CONSTRAINT [PK_User] PRIMARY KEY ([ID]),
+    CONSTRAINT [FK_User_UserCategories_CategoryID] FOREIGN KEY ([CategoryID]) REFERENCES [UserCategories] ([ID]) ON DELETE CASCADE
+);
+GO
+
 CREATE TABLE [Perfume] (
     [ID] int NOT NULL IDENTITY,
     [Name] nvarchar(50) NOT NULL,
     [Description] nvarchar(200) NOT NULL,
     [Cost] int NOT NULL,
-    [IdBrand] nvarchar(50) NOT NULL,
-    [IdVolume] int NOT NULL,
-    [IdGender] int NOT NULL,
-    [IdConcentration] int NOT NULL,
-    [BrandID] int NOT NULL,
+    [BrandID] nvarchar(50) NOT NULL,
     [VolumeID] int NOT NULL,
     [GenderID] int NOT NULL,
     [ConcentrationID] int NOT NULL,
+    [BrandID1] int NOT NULL,
     [StockID] int NOT NULL,
     [CreatedBy] nvarchar(max) NULL,
     [CreatedAt] datetime2 NOT NULL,
@@ -115,15 +143,15 @@ CREATE TABLE [Perfume] (
     [DeleteBy] nvarchar(max) NULL,
     [DeleteAt] datetime2 NULL,
     CONSTRAINT [PK_Perfume] PRIMARY KEY ([ID]),
-    CONSTRAINT [FK_Perfume_Brand_BrandID] FOREIGN KEY ([BrandID]) REFERENCES [Brand] ([ID]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Perfume_Brand_BrandID1] FOREIGN KEY ([BrandID1]) REFERENCES [Brand] ([ID]) ON DELETE CASCADE,
     CONSTRAINT [FK_Perfume_Concentration_ConcentrationID] FOREIGN KEY ([ConcentrationID]) REFERENCES [Concentration] ([ID]) ON DELETE CASCADE,
     CONSTRAINT [FK_Perfume_Gender_GenderID] FOREIGN KEY ([GenderID]) REFERENCES [Gender] ([ID]) ON DELETE CASCADE,
     CONSTRAINT [FK_Perfume_Stock_StockID] FOREIGN KEY ([StockID]) REFERENCES [Stock] ([ID]) ON DELETE CASCADE,
-    CONSTRAINT [FK_Perfume_Volume_VolumeID] FOREIGN KEY ([VolumeID]) REFERENCES [Volume] ([ID]) ON DELETE CASCADE
+    CONSTRAINT [FK_Perfume_UserCategory_VolumeID] FOREIGN KEY ([VolumeID]) REFERENCES [UserCategory] ([ID]) ON DELETE CASCADE
 );
 GO
 
-CREATE INDEX [IX_Perfume_BrandID] ON [Perfume] ([BrandID]);
+CREATE INDEX [IX_Perfume_BrandID1] ON [Perfume] ([BrandID1]);
 GO
 
 CREATE INDEX [IX_Perfume_ConcentrationID] ON [Perfume] ([ConcentrationID]);
@@ -141,8 +169,11 @@ GO
 CREATE INDEX [IX_Perfumery_StockID] ON [Perfumery] ([StockID]);
 GO
 
+CREATE UNIQUE INDEX [IX_User_CategoryID] ON [User] ([CategoryID]);
+GO
+
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20230427141944_MigrationsInitial', N'6.0.16');
+VALUES (N'20230501162341_MigrationsInitial', N'6.0.16');
 GO
 
 COMMIT;

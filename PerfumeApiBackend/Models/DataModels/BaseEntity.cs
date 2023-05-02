@@ -10,7 +10,7 @@ namespace PerfumeApiBackend.Models.DataModels
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public string? CreatedBy { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
         public string? UpdateBy { get; set; }
         public DateTime? UpdateAt { get; set; }
         public string? DeleteBy { get; set; }

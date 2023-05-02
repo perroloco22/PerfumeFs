@@ -8,10 +8,10 @@ namespace PerfumeApiBackend.Models.DataModels
         public int Amount { get; set; }
 
         [Required]
-        public int IdPerfume { get; set; }
+        public int PerfumeID { get; set; }
         
         [Required]
-        public int IdPerfumery { get; set; }
+        public int PerfumeryID { get; set; }
         
         [Required]
         public ICollection<Perfume> Perfumes { get; set; } = new List<Perfume>();

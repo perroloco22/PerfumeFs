@@ -16,6 +16,8 @@ namespace PerfumeApiBackend.DataAccess
         public DbSet<Gender>? Genders { get; set; }
         public DbSet<Stock>? Stocks { get; set; }
         public DbSet<Volume> Volumes { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserCategory> UserCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +28,8 @@ namespace PerfumeApiBackend.DataAccess
             modelBuilder.Entity<Gender>().ToTable("Gender");
             modelBuilder.Entity<Stock>().ToTable("Stock");
             modelBuilder.Entity<Volume>().ToTable("Volume");
+            modelBuilder.Entity<User>().ToTable("User");
+            modelBuilder.Entity<UserCategory>().ToTable("UserCategory");
         }
 
     }

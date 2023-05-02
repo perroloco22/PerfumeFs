@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using PerfumeApiBackend.DataAccess;
+using PerfumeApiBackend.Extension;
 using PerfumeApiBackend.Models.DataModels;
 using PerfumeApiBackend.Repository;
 using PerfumeApiBackend.Repository.Interfaces;
@@ -9,12 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+//Add DbContext
 const string CONNECTIONNAME = "PerfumeDB";
 var connectionString = builder.Configuration.GetConnectionString(CONNECTIONNAME);
 builder.Services.AddDbContext<PerfumeContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<PerfumeRepository>();
 builder.Services.AddScoped<PerfumeryRepository>();
 
+//Add Jwt Services
+builder.Services.AddJwtTokenServices(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -42,6 +46,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
