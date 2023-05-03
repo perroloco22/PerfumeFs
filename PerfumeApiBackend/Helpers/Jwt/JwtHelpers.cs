@@ -35,7 +35,7 @@ namespace PerfumeApiBackend.Helpers.Jwt
             }
             else if (userToken.Category == Category.Admin.ToString())
             {
-                claims.Add(new Claim(ClaimTypes.Role, Category.Super.ToString()));
+                claims.Add(new Claim(ClaimTypes.Role, Category.Admin.ToString()));
             }
             else
             {
@@ -60,13 +60,13 @@ namespace PerfumeApiBackend.Helpers.Jwt
             return new JwtHeader(_signingCredentials);
         }
 
-        public static JwtPayload GetPayLoad(UserToken userToken, JwtSettings jwtSettings, DateTime dateTime, Guid Id)
+        public static JwtPayload GetPayLoad(UserToken userToken, JwtSettings jwtSettings, DateTime expire, out Guid Id)
         {
             return new JwtPayload(issuer: jwtSettings.ValidIssuer,
                                   audience: jwtSettings.ValidAudience,
-                                  claims: GetClaims(userToken, Id),
+                                  claims: GetClaims(userToken, out Id),
                                   notBefore: new DateTimeOffset(DateTime.Now).DateTime, // decimos que no este disponible antes de hoy
-                                  expires: new DateTimeOffset(dateTime).DateTime//caducidad en 1 dia);
+                                  expires: new DateTimeOffset(expire).DateTime//caducidad en 1 dia);
                                  );
         }
 
@@ -80,10 +80,10 @@ namespace PerfumeApiBackend.Helpers.Jwt
                 }
 
                 Guid Id = new Guid();
-                DateTime expire = DateTime.UtcNow.AddDays(1);
+                DateTime expireToken = DateTime.UtcNow.AddDays(1);
 
                 var jwtHeader = GetJwtHeader(jwtSettings);
-                var jwtPayLoad = GetPayLoad(userToken, jwtSettings, expire, Id);
+                var jwtPayLoad = GetPayLoad(userToken, jwtSettings, expireToken, out Id);
 
                 /*
                 var jwtPayLoad = 
@@ -104,8 +104,9 @@ namespace PerfumeApiBackend.Helpers.Jwt
                 UserTokenResult.Id = userToken.Id;
                 UserTokenResult.Token = signedToken;
                 UserTokenResult.UserName = userToken.UserName;
-                UserTokenResult.Validity = expire.TimeOfDay;
+                UserTokenResult.Validity = expireToken.TimeOfDay;
                 UserTokenResult.Guid = Id;
+                UserTokenResult.Category = userToken.Category;
 
                 return UserTokenResult;
             }

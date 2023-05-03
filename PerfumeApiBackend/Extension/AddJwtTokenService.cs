@@ -9,9 +9,14 @@ namespace PerfumeApiBackend.Extension
     {
         public static void AddJwtTokenServices(this IServiceCollection services, IConfiguration configuration)
         {
-            //Binding JwtSetting with configuration app.json
+            /*
+            --Binding JwtSetting with configuration appsettings.json--
             var bindJwtSettings = new JwtSettings();
             configuration.Bind("JwtValues", bindJwtSettings);
+            */
+
+            //Binding JwtSetting with secret manager
+            var bindJwtSettings = configuration.GetSection("PerfumeProject:JwtValues").Get<JwtSettings>();
 
             //Add instance
             services.AddSingleton(bindJwtSettings);
