@@ -17,8 +17,8 @@ namespace PerfumeApiBackend.Repository
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            IEnumerable<TEntity> lst = await (from entityes in _context.Set<TEntity>()
-                                      select entityes).ToListAsync();
+            IEnumerable<TEntity> lst = await (from entities in _context.Set<TEntity>()
+                                      select entities).ToListAsync();
             return lst;
         }
 
@@ -44,7 +44,6 @@ namespace PerfumeApiBackend.Repository
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

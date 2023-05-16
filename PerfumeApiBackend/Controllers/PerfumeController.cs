@@ -6,7 +6,7 @@ using PerfumeApiBackend.Repository;
 
 namespace PerfumeApiBackend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")]    
     [ApiController]
     public class PerfumeController : TemplateController<Perfume,PerfumeRepository>
     {
