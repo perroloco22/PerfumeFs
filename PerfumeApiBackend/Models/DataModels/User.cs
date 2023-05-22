@@ -22,7 +22,7 @@ namespace PerfumeApiBackend.Models.DataModels
 
         [Required]
         //[ForeignKey("UserCategoryID")]
-        public virtual UserCategory UserCategory { get; set; } = new UserCategory();
+        public virtual UserCategory UserCategory { get; set; } 
         
     }
 }

@@ -4,9 +4,9 @@ namespace PerfumeApiBackend.Models.DataModels
 {
     public class Brand : BaseEntity
     {
+        [Required]
         public string? Name { get; set; }
 
-        [Required]
-        public ICollection<Perfume> Perfumes { get; set; } = new List<Perfume>();
+        public ICollection<Perfume> Perfumes { get; set; } 
     }
 }

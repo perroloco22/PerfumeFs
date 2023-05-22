@@ -4,33 +4,34 @@ using Microsoft.EntityFrameworkCore;
 using PerfumeApiBackend.Models.DataModels;
 using PerfumeApiBackend.Repository.Interfaces;
 
-namespace PerfumeApiBackend.Controllers
+namespace PerfumeApiBackend.Controllers.Template
 {
     [Route("api/[controller]")]
     [ApiController]
     public abstract class TemplateController<TEntity, TRepository> : ControllerBase
         where TEntity : BaseEntity
-        where TRepository : IRepository<TEntity>
+        where TRepository : IRepositoryGet<TEntity>, IRepositoryModify<TEntity>
     {
-        private readonly TRepository _repository;
+        protected readonly TRepository _repository;
 
         public TemplateController(TRepository repository)
         {
             _repository = repository;
         }
 
+        
         [HttpGet]
-        public async Task<ActionResult<List<TEntity>>> GetAllAsync()
+        public virtual async Task<ActionResult<List<TEntity>>> GetAllAsync()
         {
             var lst = await _repository.GetAllAsync();
             return Ok(lst);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TEntity>> GetByIdAsync(int id)
+        public virtual async Task<ActionResult<TEntity>> GetByIdAsync(int id)
         {
             var entity = await _repository.GetByIdAsync(id);
-            if (entity != null)
+            if (entity is null)
             {
                 return NotFound();
             }
@@ -39,31 +40,30 @@ namespace PerfumeApiBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddAsync(TEntity entity)
+        public virtual async Task<ActionResult> AddAsync(TEntity entity)
         {
-            var respon = await _repository.AddAsync(entity);
-            if (respon == entity)
+            var res = await _repository.AddAsync(entity);
+            if (res is not null)
             {
-                return CreatedAtAction("GetById", new {id = entity.ID},respon);
+                return Ok(res);
             }
             return Problem($"No se pudo agregar la {nameof(TEntity)}");
         }
 
-        [HttpDelete]
-        public async Task<ActionResult<TEntity>> DeletedAsync(int id)
+        [HttpDelete("{id}")]
+        public virtual async Task<ActionResult<TEntity>> DeletedAsync(int id)
         {
             var response = await _repository.DeleteAsync(id);
-            if (response != null)
+            if (response is not null)
             {
                 return Ok(response);
             }
-            return NotFound();
-
+            return BadRequest();
         }
 
         [HttpPut("{id}")]
-       public async Task<ActionResult> UpdateAsync(TEntity entity,int id)
-       {
+        public virtual async Task<ActionResult> UpdateAsync(TEntity entity, int id)
+        {
 
             if (entity.ID != id)
             {
@@ -72,13 +72,13 @@ namespace PerfumeApiBackend.Controllers
 
             var response = await _repository.UpdateAsync(entity);
 
-            if (response != null)
+            if (response is not null)
             {
                 return Ok();
             }
 
             return NotFound();
 
-       }
+        }
     }
 }

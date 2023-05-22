@@ -5,10 +5,9 @@ namespace PerfumeApiBackend.Models.DataModels
     public class Concentration : BaseEntity
     {
         [Required]
-        public string Type { get; set; }
+        public TypeConcentration Type { get; set; }
 
-        [Required]
-        public ICollection<Perfume> Perfumes { get; set; } = new List<Perfume>();
+        public ICollection<Perfume> Perfumes { get; set; }
                 
     }
 }

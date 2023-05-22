@@ -16,8 +16,7 @@ namespace PerfumeApiBackend.Models.DataModels
         [Required, StringLength(50)]
         public string? Address { get; set; } = string.Empty;
 
-        [Required]
-        public Stock Stock { get; set; } = new Stock();
+        public ICollection<Stock> Stocks { get; set; }
 
 
         //[InverseProperty(nameof(Perfume.Perfumery))]

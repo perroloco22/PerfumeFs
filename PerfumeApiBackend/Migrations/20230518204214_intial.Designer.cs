@@ -12,8 +12,8 @@ using PerfumeApiBackend.DataAccess;
 namespace PerfumeApiBackend.Migrations
 {
     [DbContext(typeof(PerfumeContext))]
-    [Migration("20230502021925_initial")]
-    partial class initial
+    [Migration("20230518204214_intial")]
+    partial class intial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,7 @@ namespace PerfumeApiBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdateAt")
@@ -78,9 +79,8 @@ namespace PerfumeApiBackend.Migrations
                     b.Property<string>("DeleteBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -113,9 +113,8 @@ namespace PerfumeApiBackend.Migrations
                     b.Property<string>("DeleteBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -137,16 +136,12 @@ namespace PerfumeApiBackend.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<int?>("BrandID")
-                        .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.Property<int?>("ConcentrationID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("Cost")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedAt")
@@ -162,21 +157,16 @@ namespace PerfumeApiBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int?>("GenderID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("StockID")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -185,7 +175,6 @@ namespace PerfumeApiBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("VolumeID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -195,8 +184,6 @@ namespace PerfumeApiBackend.Migrations
                     b.HasIndex("ConcentrationID");
 
                     b.HasIndex("GenderID");
-
-                    b.HasIndex("StockID");
 
                     b.HasIndex("VolumeID");
 
@@ -233,9 +220,6 @@ namespace PerfumeApiBackend.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("StockID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
@@ -243,8 +227,6 @@ namespace PerfumeApiBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("StockID");
 
                     b.ToTable("Perfumery", (string)null);
                 });
@@ -285,6 +267,10 @@ namespace PerfumeApiBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("PerfumeID");
+
+                    b.HasIndex("PerfumeryID");
 
                     b.ToTable("Stock", (string)null);
                 });
@@ -399,8 +385,8 @@ namespace PerfumeApiBackend.Migrations
                     b.Property<string>("DeleteBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -417,33 +403,19 @@ namespace PerfumeApiBackend.Migrations
                 {
                     b.HasOne("PerfumeApiBackend.Models.DataModels.Brand", "Brand")
                         .WithMany("Perfumes")
-                        .HasForeignKey("BrandID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BrandID");
 
                     b.HasOne("PerfumeApiBackend.Models.DataModels.Concentration", "Concentration")
                         .WithMany("Perfumes")
-                        .HasForeignKey("ConcentrationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ConcentrationID");
 
                     b.HasOne("PerfumeApiBackend.Models.DataModels.Gender", "Gender")
                         .WithMany("Perfumes")
-                        .HasForeignKey("GenderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PerfumeApiBackend.Models.DataModels.Stock", "Stock")
-                        .WithMany("Perfumes")
-                        .HasForeignKey("StockID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GenderID");
 
                     b.HasOne("PerfumeApiBackend.Models.DataModels.Volume", "Volume")
                         .WithMany("Perfumes")
-                        .HasForeignKey("VolumeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VolumeID");
 
                     b.Navigation("Brand");
 
@@ -451,20 +423,26 @@ namespace PerfumeApiBackend.Migrations
 
                     b.Navigation("Gender");
 
-                    b.Navigation("Stock");
-
                     b.Navigation("Volume");
                 });
 
-            modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.Perfumery", b =>
+            modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.Stock", b =>
                 {
-                    b.HasOne("PerfumeApiBackend.Models.DataModels.Stock", "Stock")
-                        .WithMany("Perfumerys")
-                        .HasForeignKey("StockID")
+                    b.HasOne("PerfumeApiBackend.Models.DataModels.Perfume", "Perfume")
+                        .WithMany("Stocks")
+                        .HasForeignKey("PerfumeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Stock");
+                    b.HasOne("PerfumeApiBackend.Models.DataModels.Perfumery", "Perfumery")
+                        .WithMany("Stocks")
+                        .HasForeignKey("PerfumeryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Perfume");
+
+                    b.Navigation("Perfumery");
                 });
 
             modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.User", b =>
@@ -493,11 +471,14 @@ namespace PerfumeApiBackend.Migrations
                     b.Navigation("Perfumes");
                 });
 
-            modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.Stock", b =>
+            modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.Perfume", b =>
                 {
-                    b.Navigation("Perfumerys");
+                    b.Navigation("Stocks");
+                });
 
-                    b.Navigation("Perfumes");
+            modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.Perfumery", b =>
+                {
+                    b.Navigation("Stocks");
                 });
 
             modelBuilder.Entity("PerfumeApiBackend.Models.DataModels.UserCategory", b =>

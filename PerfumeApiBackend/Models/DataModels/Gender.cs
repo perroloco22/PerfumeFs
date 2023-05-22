@@ -5,10 +5,9 @@ namespace PerfumeApiBackend.Models.DataModels
     public class Gender : BaseEntity
     {
         [Required]
-        public string? Type { get; set; }
+        public TypeGender? Type { get; set; }
 
-        [Required]
-        public ICollection<Perfume> Perfumes { get; set; } = new List<Perfume>();
+        public ICollection<Perfume> Perfumes { get; set; } 
 
     }
 }

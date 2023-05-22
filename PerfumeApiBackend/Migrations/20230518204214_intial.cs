@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PerfumeApiBackend.Migrations
 {
-    public partial class initial : Migration
+    public partial class intial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace PerfumeApiBackend.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -34,7 +34,7 @@ namespace PerfumeApiBackend.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -53,7 +53,7 @@ namespace PerfumeApiBackend.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -67,14 +67,13 @@ namespace PerfumeApiBackend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Stock",
+                name: "Perfumery",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<int>(type: "int", nullable: false),
-                    PerfumeID = table.Column<int>(type: "int", nullable: false),
-                    PerfumeryID = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -84,7 +83,7 @@ namespace PerfumeApiBackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stock", x => x.ID);
+                    table.PrimaryKey("PK_Perfumery", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,7 +111,7 @@ namespace PerfumeApiBackend.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -123,33 +122,6 @@ namespace PerfumeApiBackend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Volume", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Perfumery",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    StockID = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeleteBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeleteAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Perfumery", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Perfumery_Stock_StockID",
-                        column: x => x.StockID,
-                        principalTable: "Stock",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,13 +160,12 @@ namespace PerfumeApiBackend.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Cost = table.Column<int>(type: "int", nullable: false),
-                    BrandID = table.Column<int>(type: "int", maxLength: 50, nullable: false),
-                    VolumeID = table.Column<int>(type: "int", nullable: false),
-                    GenderID = table.Column<int>(type: "int", nullable: false),
-                    ConcentrationID = table.Column<int>(type: "int", nullable: false),
-                    StockID = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Cost = table.Column<int>(type: "int", nullable: true),
+                    BrandID = table.Column<int>(type: "int", nullable: true),
+                    VolumeID = table.Column<int>(type: "int", nullable: true),
+                    GenderID = table.Column<int>(type: "int", nullable: true),
+                    ConcentrationID = table.Column<int>(type: "int", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -209,30 +180,53 @@ namespace PerfumeApiBackend.Migrations
                         name: "FK_Perfume_Brand_BrandID",
                         column: x => x.BrandID,
                         principalTable: "Brand",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_Perfume_Concentration_ConcentrationID",
                         column: x => x.ConcentrationID,
                         principalTable: "Concentration",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_Perfume_Gender_GenderID",
                         column: x => x.GenderID,
                         principalTable: "Gender",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Perfume_Stock_StockID",
-                        column: x => x.StockID,
-                        principalTable: "Stock",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
                     table.ForeignKey(
                         name: "FK_Perfume_Volume_VolumeID",
                         column: x => x.VolumeID,
                         principalTable: "Volume",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stock",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    PerfumeID = table.Column<int>(type: "int", nullable: false),
+                    PerfumeryID = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdateBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeleteBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeleteAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stock", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Stock_Perfume_PerfumeID",
+                        column: x => x.PerfumeID,
+                        principalTable: "Perfume",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Stock_Perfumery_PerfumeryID",
+                        column: x => x.PerfumeryID,
+                        principalTable: "Perfumery",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -253,19 +247,19 @@ namespace PerfumeApiBackend.Migrations
                 column: "GenderID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Perfume_StockID",
-                table: "Perfume",
-                column: "StockID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Perfume_VolumeID",
                 table: "Perfume",
                 column: "VolumeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Perfumery_StockID",
-                table: "Perfumery",
-                column: "StockID");
+                name: "IX_Stock_PerfumeID",
+                table: "Stock",
+                column: "PerfumeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stock_PerfumeryID",
+                table: "Stock",
+                column: "PerfumeryID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_UserCategoryID",
@@ -276,13 +270,19 @@ namespace PerfumeApiBackend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Stock");
+
+            migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
                 name: "Perfume");
 
             migrationBuilder.DropTable(
                 name: "Perfumery");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "UserCategory");
 
             migrationBuilder.DropTable(
                 name: "Brand");
@@ -295,12 +295,6 @@ namespace PerfumeApiBackend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Volume");
-
-            migrationBuilder.DropTable(
-                name: "Stock");
-
-            migrationBuilder.DropTable(
-                name: "UserCategory");
         }
     }
 }

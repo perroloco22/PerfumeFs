@@ -4,8 +4,9 @@ using NuGet.Protocol.Core.Types;
 using PerfumeApiBackend.DataAccess;
 using PerfumeApiBackend.Extension;
 using PerfumeApiBackend.Models.DataModels;
-using PerfumeApiBackend.Repository;
+using PerfumeApiBackend.Repository.ConcretRepo;
 using PerfumeApiBackend.Repository.Interfaces;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,15 +19,21 @@ var builder = WebApplication.CreateBuilder(args);
 //--Add DbContext with secret manager
 const string CONNECTIONNAME = "PerfumeProject:ConnectionStrings";
 string connectionString = builder.Configuration.GetValue<string>(CONNECTIONNAME);
-
 builder.Services.AddDbContext<PerfumeContext>(options => options.UseSqlServer(connectionString));
+
+//add Instance of repository
 builder.Services.AddScoped<PerfumeRepository>();
 builder.Services.AddScoped<PerfumeryRepository>();
+builder.Services.AddScoped<BrandRepository>();
+builder.Services.AddScoped<GenderRepository>();
 
 //Add Jwt Services
 builder.Services.AddJwtTokenServices(builder.Configuration);
 
-builder.Services.AddControllers();
+
+//Ignore cylces 
+builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -72,6 +79,10 @@ builder.Services.AddCors(options =>
         builder.AllowAnyHeader();
     });
 });
+
+
+//Add automapper
+builder.Services.AddAutoMapper(typeof(Program));
 
 
 var app = builder.Build();

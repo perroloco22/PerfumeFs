@@ -4,11 +4,11 @@ using PerfumeApiBackend.Repository.Interfaces;
 
 namespace PerfumeApiBackend.Repository
 {
-    public class Repository<TEntity, TContext> : IRepository<TEntity>
+    public abstract class Repository<TEntity, TContext> : IRepositoryModify<TEntity>, IRepositoryGet<TEntity>
         where TEntity : BaseEntity
         where TContext : DbContext
     {
-        private readonly TContext _context;
+        protected readonly TContext _context;
 
         public Repository(TContext context )
         {
@@ -18,7 +18,7 @@ namespace PerfumeApiBackend.Repository
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             IEnumerable<TEntity> lst = await (from entities in _context.Set<TEntity>()
-                                      select entities).ToListAsync();
+                                              select entities).ToListAsync();
             return lst;
         }
 
@@ -55,6 +55,7 @@ namespace PerfumeApiBackend.Repository
             {
                 _context.Set<TEntity>().Remove(entity);
                 await _context.SaveChangesAsync();
+                return entity;
             }
             return null;
 
@@ -63,7 +64,7 @@ namespace PerfumeApiBackend.Repository
         public async Task<TEntity?> UpdateAsync(TEntity entity)
         {
             try
-            { 
+            {
                 var res = await _context.Set<TEntity>().FindAsync(entity.ID);
                 if (res != null)
                 {
@@ -80,6 +81,7 @@ namespace PerfumeApiBackend.Repository
                 throw;
             }
         }
+
 
     }
 }

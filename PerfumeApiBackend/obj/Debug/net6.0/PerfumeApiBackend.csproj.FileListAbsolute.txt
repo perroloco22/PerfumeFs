@@ -271,3 +271,5 @@ E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\obj\Debug\net6.0\Per
 E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\obj\Debug\net6.0\ref\PerfumeApiBackend.dll
 E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\bin\Debug\net6.0\AutoMapper.dll
+E:\MATIAS\INFORMATICA\PROJECTS\PerfumesFS\PerfumeApiBackend\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

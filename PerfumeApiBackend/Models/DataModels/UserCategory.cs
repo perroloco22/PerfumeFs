@@ -8,7 +8,7 @@ namespace PerfumeApiBackend.Models.DataModels
         public string? Category  { get; set; }
 
         [Required]
-        public  ICollection<User> Users { get; set; } = new List<User>();
+        public  ICollection<User> Users { get; set; } 
 
     }
 }

@@ -11,38 +11,28 @@ namespace PerfumeApiBackend.Models.DataModels
         [Required, StringLength(50)]
         public string? Name{ get; set; } = string.Empty;
 
-        [Required, StringLength(200)]
+        [StringLength(200)]
         public string? Description { get; set; } = string.Empty;
 
-        [Required]
         public int? Cost { get; set; }
         
-        [Required, StringLength(50)]
         public int? BrandID { get; set; } 
 
-        [Required]
         public int? VolumeID { get; set; }
 
-        [Required]
         public int? GenderID { get; set; }
 
-        [Required]
         public int? ConcentrationID { get; set; }
                 
-        [Required]
-        public virtual Brand Brand { get; set; } = new Brand();
+        public Brand? Brand { get; set; } 
 
-        [Required]
-        public virtual Volume Volume { get; set; } = new Volume();
+        public Volume? Volume { get; set; } 
 
-        [Required]
-        public virtual Gender Gender { get; set; } = new Gender();
+        public Gender? Gender { get; set; } 
 
-        [Required]
-        public virtual Concentration Concentration { get; set; } = new Concentration();
+        public Concentration? Concentration { get; set; } 
 
-        [Required]
-        public virtual Stock Stock { get; set; } = new Stock();
+        public ICollection<Stock>? Stocks { get; set; } 
 
         //[ForeignKey("IdPerfumery")]
         //[InverseProperty("Perfumes")]

@@ -2,7 +2,7 @@
 using PerfumeApiBackend.DataAccess;
 using PerfumeApiBackend.Models.DataModels;
 
-namespace PerfumeApiBackend.Repository
+namespace PerfumeApiBackend.Repository.ConcretRepo
 {
     public class PerfumeryRepository : Repository<Perfumery, PerfumeContext>
     {

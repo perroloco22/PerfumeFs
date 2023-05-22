@@ -14,9 +14,9 @@ namespace PerfumeApiBackend.Models.DataModels
         public int PerfumeryID { get; set; }
         
         [Required]
-        public ICollection<Perfume> Perfumes { get; set; } = new List<Perfume>();
+        public Perfume Perfume { get; set; } 
 
         [Required]
-        public ICollection<Perfumery> Perfumerys { get; set;} = new List<Perfumery>();
+        public Perfumery Perfumery { get; set;}
     }
 }

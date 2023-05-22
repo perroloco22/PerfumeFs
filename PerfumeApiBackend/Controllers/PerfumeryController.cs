@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PerfumeApiBackend.Controllers.Template;
 using PerfumeApiBackend.Models.DataModels;
-using PerfumeApiBackend.Repository;
+using PerfumeApiBackend.Repository.ConcretRepo;
 
 namespace PerfumeApiBackend.Controllers
 {
